@@ -9,7 +9,8 @@ OPENAPI_DIR=openapi
 OPENAPI_FILE=$(OPENAPI_DIR)/server.yml
 OPENAPI_CONFIG_FILE=$(OPENAPI_DIR)/config.yml
 
-OPENAPI_DOCKER_CMD=docker run --rm -v $${PWD}:/local openapitools/openapi-generator-cli:v5.0.0-beta2
+OPENAPI_GEN_VERSION=v5.0.0-beta2
+OPENAPI_DOCKER_CMD=docker run --rm -v $${PWD}:/local openapitools/openapi-generator-cli:$(OPENAPI_GEN_VERSION)
 OPENAPI_GEN_DIR=server
 
 # --- OpenAPI
