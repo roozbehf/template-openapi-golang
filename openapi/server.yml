@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  contact:
+    name: Roozbeh Farahbod
+    email: consulting@roozbeh.ca
+  description: Golang Service
+  license:
+    name: UNLICENSED
+  title: Golang Service
+  version: 1.0.0
+
+servers:
+- url: '{protocol}://{site}'
+  description: The API server
+  variables:
+    protocol:
+      enum:
+        - http
+        - https
+      default: https
+    site:
+      default: 'localhost:8080'
+
+paths:
+  /events:
+    post:
+      description: Records an event
+      operationId: recordEvent
+      requestBody:
+        required: false
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/RecordEventData'
+      responses:
+        '202':
+          description: Event record accepted
+          content:
+            'application/json':
+              schema:
+               $ref: '#/components/schemas/RecordEventResponse'
+        default:
+          description: error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/GenericError'
+
+components:
+  schemas: 
+
+    RecordEventData: 
+      $ref: '#/components/schemas/EventData'
+
+    RecordEventResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/EventData'
+      required:
+        - data
+
+    EventData:
+      type: object
+      properties:
+        id: 
+          description: a unique id for this event instance
+          type: string
+        type:
+          description: the type of this object
+          type: string
+          enum: 
+            - event
+        keyword:
+          description: the main keyword of the event
+          type: string
+        time:
+          description: Unix time of the event in milliseconds
+          type: integer
+          format: int64
+        tags:
+          description: a list of tags
+          type: array
+          items: 
+            type: string
+        details:
+          description: additional data
+          type: object
+      required:
+        - id
+        - type
+        - keyword
+        - time
+
+    GenericError:
+      type: object
+      properties:
+        code: 
+          description: error code
+          type: number
+        message:
+          description: a summary of the error
+          type: string
+        description:
+          description: details of the error
+          type: string
+      required:
+        - code
+        - message
+
+

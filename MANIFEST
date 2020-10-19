@@ -1,0 +1,5 @@
+VERSION=v1.0.0
+PROJECT=template-openapi-golang
+PACKAGE_NAME=golangserver
+
+
